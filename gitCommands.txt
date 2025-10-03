@@ -1,0 +1,9 @@
+git branch --> listar ramas
+git branch -r --> listar ramas remotas
+git fetch --all -->  traer las ramas creadas desde github
+
+git checkout -b nueva-rama-1 origin/nueva-rama-1
+
+o
+
+git switch nueva-rama-1 ( apartir de version 2.23)
