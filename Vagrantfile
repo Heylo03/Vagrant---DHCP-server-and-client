@@ -9,9 +9,9 @@ Vagrant.configure("2") do |config|
     # Adaptador 1: Red privada
     server.vm.network "private_network", ip: "192.168.56.10"
     # Adaptador 2: Red interna (DHCP)
-    server.vm.network "private_network", ip: "192.168.57.10", virtualbox__intnet: "intNet1",type = "dhcp"
+    server.vm.network "private_network", ip: "192.168.57.10", virtualbox__intnet: "intNet1"
     # Script de configuración (El provision)
-    server.vm.provision "shell", path: "provision/dhcp-server.sh"
+    server.vm.provision "shell", path: "provision/provision_server.sh"
   end
   #Creación cliente1
   config.vm.define "c1" do |c1|
@@ -19,6 +19,7 @@ Vagrant.configure("2") do |config|
     c1.vm.network "private_network", 
                   virtualbox__intnet: "intNet1",
                   type: "dhcp"
+    c1.vm.provision "shell", path: "provision/provision_client.sh"
   end
   #Creacion cliente2
   config.vm.define "c2" do |c2|
@@ -27,5 +28,6 @@ Vagrant.configure("2") do |config|
                   mac: "",           #La MAC debe ser fija
                   virtualbox__intnet: "intNet1",
                   type: "dhcp"
+    c2.vm.provision "shell", path: "provision/provision_client.sh"
   end
 end
