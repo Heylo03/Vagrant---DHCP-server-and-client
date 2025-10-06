@@ -9,9 +9,16 @@ apt update -y
 #Instalamos el dhcp y las herramientas necesarias
 apt install -y isc-dhcp-server net-tools iproute2
 
+
+# Configurar interfaz interna manualmente
+INT_IF=$(ip -o link show | awk -F': ' '/enp0s8|eth1/ {print $2; exit}')
+ip link set $INT_IF up
+ip addr add 192.168.57.10/24 dev $INT_IF
+
+
 # Interfaz donde escuchará el servicio (la red interna)
 INTERFACE=$(ip -o -4 addr show | awk '/192\.168\.57\./ {print $2}')
-sed -i "s/^INTERFACESv4=.*/INTERFACESv4=\"$INTERFACE\"/" /etc/default/isc-dhcp-server
+echo "INTERFACESv4=\"$INTERFACE\"" > /etc/default/isc-dhcp-server
 
 # Copia de seguridad del archivo de configuración por si es necesaria
 cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.bak
@@ -40,6 +47,7 @@ host c2 {
 EOF
 
 # Reiniciar y habilitar servicio
+sleep 2
 systemctl restart isc-dhcp-server
 systemctl enable isc-dhcp-server
 
@@ -48,7 +56,4 @@ echo "Comprobando estado del servicio..."
 systemctl status isc-dhcp-server --no-pager
 
 
-#Asignar IP manualmente a la interfaz interna
-#ip link set $(ip -o link show | awk -F': ' '/enp|eth/ {print $2}' | grep -v lo | tail -n1) up
-#ip addr add 192.168.57.10/24 dev $(ip -o link show | awk -F': ' '/enp|eth/ {print $2}' | grep -v lo | tail -n1)
 
