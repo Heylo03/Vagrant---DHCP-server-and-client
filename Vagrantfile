@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     server.vm.network "private_network", 
                       ip: "192.168.57.10", 
                       virtualbox__intnet: "intNet1",
-                      auto_config: false
+                      auto_config: true
     # Script de configuración (El provision)
     server.vm.provision "shell", 
                         path: "provision/provision_server.sh"
@@ -27,11 +27,7 @@ Vagrant.configure("2") do |config|
                   virtualbox__intnet: "intNet1",
                   type: "dhcp"
     c1.vm.provision "shell", path: "provision/provision_client.sh"
-  end
-    #Creacion cliente2
-    config.vm.define "c2" do |c2|
-
-  
+  end  
   #Creacion cliente2
   config.vm.define "c2" do |c2|
     c2.vm.hostname = "c2"
