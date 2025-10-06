@@ -27,7 +27,7 @@ subnet 192.168.57.0 netmask 255.255.255.0 {
   option routers 192.168.57.10;
   option broadcast-address 192.168.57.255;
   option domain-name-servers 8.8.8.8, 4.4.4.4;
-  option domain-name "ejemplo.es";
+  option domain-name "micasa.es";
 }
 
 # Cliente c2 - IP fija por MAC
@@ -46,9 +46,4 @@ systemctl enable isc-dhcp-server
 #Comprobamos estado del servicio y evatimos salida paginada para automatizar
 echo "Comprobando estado del servicio..."
 systemctl status isc-dhcp-server --no-pager
-
-
-#Asignar IP manualmente a la interfaz interna
-#ip link set $(ip -o link show | awk -F': ' '/enp|eth/ {print $2}' | grep -v lo | tail -n1) up
-#ip addr add 192.168.57.10/24 dev $(ip -o link show | awk -F': ' '/enp|eth/ {print $2}' | grep -v lo | tail -n1)
 
