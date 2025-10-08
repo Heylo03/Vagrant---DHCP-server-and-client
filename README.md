@@ -204,6 +204,90 @@ Use `logout` to exit the machine and do the same in **c1** and **c2**.
 -   c1 to Google\
 -   Physical machine to server and c2 (the c2 ping should fail)
 
+Example outputs:
+
+``` bash
+vagrant@c1:~$ ping -c 5 8.8.8.8
+5 packets transmitted, 5 received, 0% packet loss, time 4674ms
+rtt min/avg/max/mdev = 17.999/52.489/118.158/42.324 ms
+```
+
+``` bash
+vagrant@c1:~$ ping -c 3 192.168.57.31
+3 packets transmitted, 3 received, 0% packet loss
+rtt min/avg/max/mdev = 0.359/0.401/0.437/0.032 ms
+```
+
+``` bash
+vagrant@server:~$ ping -c 3 192.168.57.25
+3 packets transmitted, 3 received, 0% packet loss
+rtt min/avg/max/mdev = 0.262/0.291/0.316/0.022 ms
+```
+
+``` bash
+vagrant@server:~$ ping -c 3 192.168.57.31
+3 packets transmitted, 3 received, 0% packet loss
+rtt min/avg/max/mdev = 0.299/0.315/0.326/0.011 ms
+```
+
+------------------------------------------------------------------------
+
+### Example Vagrantfile Snippets
+
+``` ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bullseye64"
+
+  # Server
+  config.vm.define "server" do |server|
+    server.vm.hostname = "server"
+    # Adapter 1: Private network
+    server.vm.network "private_network", ip: "192.168.56.10"
+    # Adapter 2: Internal network (DHCP)
+    server.vm.network "private_network",
+      ip: "192.168.57.10",
+      virtualbox__intnet: "intNet1",
+      auto_config: true
+    # Provision script
+    server.vm.provision "shell", path: "provision/provision_server.sh"
+  end
+
+  # Client 1
+  config.vm.define "c1" do |c1|
+    c1.vm.hostname = "c1"
+    c1.vm.network "private_network",
+      virtualbox__intnet: "intNet1",
+      type: "dhcp"
+    c1.vm.provision "shell", path: "provision/provision_client.sh"
+  end
+
+  # Client 2
+  config.vm.define "c2" do |c2|
+    c2.vm.hostname = "c2"
+    c2.vm.network "private_network",
+      mac: "080027AABBCC", # Fixed MAC address
+      virtualbox__intnet: "intNet1",
+      type: "dhcp"
+    c2.vm.provision "shell", path: "provision/provision_client.sh"
+  end
+end
+```
+
+------------------------------------------------------------------------
+
+### Example `ip a` Outputs
+
+``` bash
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+link/ether 08:00:27:9e:bb:85 brd ff:ff:ff:ff:ff:ff
+inet 192.168.57.25/24 brd 192.168.57.255 scope global dynamic eth1
+inet6 fe80::a00:27ff:fe9e:bb85/64 scope link
+valid_lft forever preferred_lft forever
+```
+
 ------------------------------------------------------------------------
 
 **End of Document**\
