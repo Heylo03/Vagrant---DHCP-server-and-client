@@ -232,7 +232,7 @@ rtt min/avg/max/mdev = 0.299/0.315/0.326/0.011 ms
 
 ------------------------------------------------------------------------
 
-### Example Vagrantfile Snippets
+### Vagrantfile 
 
 ``` ruby
 # -*- mode: ruby -*-
