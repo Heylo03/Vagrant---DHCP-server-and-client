@@ -5,6 +5,8 @@ Vagrant.\
 The objective is that the clients will obtain the IP configuration
 automatically from the server.
 
+![Esquema proyecto](Images/esquemaObjeto.png)
+
 ------------------------------------------------------------------------
 
 **Authors:**\
