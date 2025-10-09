@@ -1,9 +1,9 @@
 #Backup files
 *~
 *.bak
-
+*.txt
 #Ignore vagrant dir
 .vagrant/
-
+.Images/
 #Ignore logs
 **/*.log
