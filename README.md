@@ -20,16 +20,16 @@ Pablo Corral Romera
 
 1.  [Vagrantfile creation and VM's network
     configuration](#1-vagrantfile-creation-and-vms-network-configuration)
-    1.  [Server creation](#11-server-creation)\
-    2.  [Client 1 creation](#12-client-1-creation)\
-    3.  [Client 2 creation](#13-client-2-creation)\
+    1.  [Server creation](#11-server-creation)
+    2.  [Client 1 creation](#12-client-1-creation)
+    3.  [Client 2 creation](#13-client-2-creation)
 2.  [Provision files](#2-provision-files)
-    1.  [Provision for the server](#21-provision-for-the-server)\
-    2.  [Provision for the clients](#22-provision-for-the-clients)\
+    1.  [Provision for the server](#21-provision-for-the-server)
+    2.  [Provision for the clients](#22-provision-for-the-clients)
 3.  [Execution of the Vagrantfile and network
     checks](#3-execution-of-the-vagrantfile-and-network-checks)
     1.  [Execution of the
-        Vagrantfile](#31-execution-of-the-vagrantfile)\
+        Vagrantfile](#31-execution-of-the-vagrantfile)
     2.  [Network check](#32-network-check)
 
 ------------------------------------------------------------------------
