@@ -33,7 +33,7 @@ subnet 192.168.57.0 netmask 255.255.255.0 {
 # Cliente c2 - IP fija por MAC
 host c2 {
   hardware ethernet 08:00:27:aa:bb:cc;
-  fixed-address 192.168.57.31;
+  fixed-address 192.168.57.4;
   option domain-name-servers 1.1.1.1;
   default-lease-time 3600;
 }
